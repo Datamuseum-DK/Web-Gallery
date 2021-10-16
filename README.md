@@ -2,6 +2,7 @@
 Simple Web Gallery
 
 Requirements:
+
 Web:
 Webserver with PHP74+
 
