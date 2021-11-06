@@ -4,8 +4,8 @@ Simple Web Gallery
 Requirements:
 
 Web:
-Webserver with PHP74+
+Webserver with php74+
 
 Scripts:
 ImageMagick
-
+php74-openssl
