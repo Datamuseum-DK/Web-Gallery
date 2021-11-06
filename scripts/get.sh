@@ -4,7 +4,7 @@
 # Copyright (c) 2021 Dansk Datahistorisk Forening http://datamuseum.dk 
 # Author: Carsten Jensen
 
-gallery=/usr/local/www/apache24/data/images/gallery
+gallery=/usr/local/www/apache24/webroot/gallery/gallery
 scriptdir=/root/scripts
 maxpixels=1024
 

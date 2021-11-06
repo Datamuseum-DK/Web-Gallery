@@ -6,7 +6,7 @@
  */
 
 
-$htmlcontent = file_get_contents($argv[1]);
+$htmlcontent = file_get_contents("{$argv[1]}");
 
 preg_match('/<pre>(.*?)<\/pre>/s', $htmlcontent, $match);
 $lines = explode(PHP_EOL, $match[1]);
@@ -26,4 +26,9 @@ foreach ($lines as $line)
 		$found = true;
 	}
 } 
+if (strpos($argv[1], "http") !== false)
+{
+   $path = "{$argv[2]}";
+}
 file_put_contents($path . DIRECTORY_SEPARATOR . "metadata.meta", $match[1]);
+
