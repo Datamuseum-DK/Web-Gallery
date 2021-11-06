@@ -6,9 +6,10 @@
  */
 
 // TODO check i18n on browser and select lang
-$version = "v1.1.0";
+$version = "v1.2.0";
 
 require_once("inc/functions.inc.php");
+require_once("inc/auth.inc.php");
 
 $page = (isset($_GET['page']) ? trim($_GET['page']) : false);
 $pic = (isset($_GET['img']) ? trim($_GET['img']) : false);
@@ -26,10 +27,10 @@ if ($page === false)
 	{
 		$html .= "<tr>";
 		$html .= "<td class='right katalog'><a class='button' href='index.php?page=" . substr($gallery, 8) . "'>" . substr($gallery, 8) . "</span></a></td><td class='left katalog'>";
-		if (file_exists($metafile = $gallery . DIRECTORY_SEPARATOR . "metadata.meta"))
-		{
-			$html .= get_metadata_line("Event.Title", $metafile);
-		}
+
+		$metafile = $gallery . DIRECTORY_SEPARATOR . "metadata.meta";
+		$html .= get_metadata_line("Event.Title", $metafile);
+
 		$html .= "</td></tr>";
 	}
 	$html .= "</table>";
@@ -41,14 +42,22 @@ else if (is_dir("gallery" . DIRECTORY_SEPARATOR . $page) && $pic !== false)
 	$htmltitle = get_metadata_line("Event.Title", "gallery" . DIRECTORY_SEPARATOR . $page . DIRECTORY_SEPARATOR . "metadata.meta") . " [" . $page . "]";
 	$html = "<a class='button navbutton' href='index.php?page=" . $page . "'>&laquo; Tilbage</a>\n";
 	$html .= "<a class='button navbutton' href='index.php'>Hovedmenu</a>\n";
+
+	// 123456:1
+	$bitstoreident = get_metadata_line("BitStore.Ident", "gallery" . DIRECTORY_SEPARATOR . $page . DIRECTORY_SEPARATOR . "metadata.meta");
+	// remove ident version nr
+	$bitstoreid = substr($bitstoreident, 0, strpos($bitstoreident, ":"));
+	$html .= "<a class='button navbutton' href='".WIKIBITS."{$bitstoreid}' target='_blank'>Bitarkivet</a>\n";
+	
+	
 	$currentgallerypath = "gallery" . DIRECTORY_SEPARATOR . $page;
 
 	$html .= "<table class='center'>";
 	$html .= "<tr><th>";
-	if (file_exists($metafile = $currentgallerypath . DIRECTORY_SEPARATOR . "metadata.meta"))
-	{
-		$html .= get_metadata_line("Event.Title", $metafile);
-	}
+
+	$metafile = $currentgallerypath . DIRECTORY_SEPARATOR . "metadata.meta";
+	$html .= get_metadata_line("Event.Title", $metafile);
+
 	$html .= "</th></tr>";
 	$comment = get_metadata_line(basename($pic), $metafile);
 	
@@ -84,10 +93,16 @@ else if (is_dir("gallery" . DIRECTORY_SEPARATOR . $page) && $pic !== false)
 }
 else if (is_dir("gallery" . DIRECTORY_SEPARATOR . $page = $_GET['page']))
 {
-	// Shown full album
+	// Show full album
 	$htmltitle = get_metadata_line("Event.Title", "gallery" . DIRECTORY_SEPARATOR . $page . DIRECTORY_SEPARATOR . "metadata.meta") . " [" . $page . "]";
+	
+	// 123456:1
+	$bitstoreident = get_metadata_line("BitStore.Ident", "gallery" . DIRECTORY_SEPARATOR . $page . DIRECTORY_SEPARATOR . "metadata.meta");
+	// remove ident version nr
+	$bitstoreid = substr($bitstoreident, 0, strpos($bitstoreident, ":"));
 
 	$html = "<a class='button navbutton' href='index.php'>Hovedmenu</a>\n";
+	$html .= "<a class='button navbutton' href='".WIKIBITS."{$bitstoreid}' target='_blank'>Bitarkivet</a>\n";
 	$currentgallerypath = "gallery" . DIRECTORY_SEPARATOR . $page;
 	$html .= "<table class='center'>";
 	$html .= "<tr><th>";

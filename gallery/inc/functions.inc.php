@@ -11,6 +11,7 @@ if (realpath(__FILE__) == realpath($_SERVER['SCRIPT_FILENAME']))
     exit;
 }
 
+require_once("inc/constants.inc.php");
 
 /**
  * Gets next line from metadata file
