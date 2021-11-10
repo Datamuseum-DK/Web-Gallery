@@ -18,15 +18,8 @@ if (realpath(__FILE__) == realpath($_SERVER['SCRIPT_FILENAME']))
  */
 define("authmethod", "varnish");
 
-
-
 // Authentication Config
-if (authmethod == "varnish")
-{
-	// Varnish Config
-	define("", $_HTTP['DDHF-UserAuth']);
-}
-elseif (authmethod == "wiki")
+if (authmethod == "wiki")
 {
 	// MySQL Config
 	define("dbhost", "localhost");

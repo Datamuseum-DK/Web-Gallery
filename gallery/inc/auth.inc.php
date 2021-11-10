@@ -5,14 +5,14 @@
  * Author: Carsten Jensen
  */
  
-require_once("../config.php");
+require_once("config.inc.php");
 $authenticated = false;
 
 
 if (authmethod == 'varnish')
 {
 	$HTML_HEADERS = getallheaders();
-	if ($HTML_HEADERS('DDHF_AUTH') == 'private')
+	if ($HTML_HEADERS['DDHF_AUTH'] == 'private')
 	{
 		$authenticated = true;
 	}
@@ -34,7 +34,7 @@ elseif (authmethod == 'wiki')
 			LIMIT 1
 		");
 		
-		$stmt->bind_param("sss", {$_COOKIE['wikidbUserID']}, {$_COOKIE['wikidbUserName']}, {$_COOKIE['wikidbUserID']});
+		$stmt->bind_param("sss", $_COOKIE['wikidbUserID'], $_COOKIE['wikidbUserName'], $_COOKIE['wikidbUserID']);
 		$stmt->execute();
 		$result = $stmt->get_result();
 		
