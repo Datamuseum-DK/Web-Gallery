@@ -26,14 +26,14 @@ if ($page === false)
 	foreach (glob("gallery/*", GLOB_ONLYDIR) as $gallery) 
 	{
 		$html .= "<tr>";
-		$html .= "<td class='right katalog'><a class='button' href='index.php?page=" . substr($gallery, 8) . "'>" . substr($gallery, 8) . "</span></a></td><td class='left katalog'>";
+		$html .= "<td class='right katalog'><a class='button' href='index.php?page=" . substr($gallery, 8) . "'>" . substr($gallery, 8) . "</a></td><td class='left katalog'>";
 
 		$metafile = $gallery . DIRECTORY_SEPARATOR . "metadata.meta";
 		$html .= get_metadata_line("Event.Title", $metafile);
 
-		$html .= "</td></tr>";
+		$html .= "</td></tr>\n";
 	}
-	$html .= "</table>";
+	$html .= "</table>\n";
 }
 else if (is_dir("gallery" . DIRECTORY_SEPARATOR . $page) && $pic !== false)
 {
