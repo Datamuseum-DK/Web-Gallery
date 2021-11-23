@@ -13,6 +13,29 @@ if (realpath(__FILE__) == realpath($_SERVER['SCRIPT_FILENAME']))
 
 require_once("inc/constants.inc.php");
 
+
+/**
+ * Checks if user has permission to view album
+ * @author Carsten Jensen
+ * @param string $metafile full path to metafile
+ * @return bool true if authenticated and permission is good
+ */
+function check_meta_auth($metafile)
+{
+	if ($authenticated == true AND get_metadata_line("BitStore.Access", $metafile) == 'private')
+	{
+		return true;
+	}
+	elseif (get_metadata_line("BitStore.Access", $metafile) == 'public')
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
 /**
  * Gets next line from metadata file
  * @author Carsten Jensen
@@ -44,6 +67,3 @@ function get_metadata_line($search, $file) {
 	}
 	return false;
 }
-
-
-
